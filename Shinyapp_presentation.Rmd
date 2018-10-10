@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = FALSE)
  - Second part in the app is to forecast the GDP data for the Country selected from the years 2018 to 2028 which is decided by the user.
 For this, library(**forecast**) is used. The [*auto.arima()*](https://www.rdocumentation.org/packages/forecast/versions/8.4/topics/auto.arima) function is used which is a Fit Best ARIMA (AutoRegressive Integrated Moving Average) Model To Univariate Time Series. Then the *forecast()* function is used to derive the predicted GDP for user defined years and plotted.
  
- - The application and the current presentation source codes is uploaded at <https://github.com/l>. The application comprises 2 files: *ui.R* (UI), *server.R* (backend).
+ - The application and the current presentation source codes is uploaded at <https://github.com/conradfrank/shiny_app>. The application comprises 2 files: *ui.R* (UI), *server.R* (backend).
   
 ## Dataset
 
