@@ -1,0 +1,68 @@
+---
+title: Coursera-Developing Data Products - Course Project - Shiny Application and Reproducible Pitch
+author: "Conrad Frank"
+date: "October 11, 2019"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+ - This presentation is the second part of the assignment of week 4, ***Developing Data Products course from Coursera*** (<https://www.coursera.org/learn/data-products>). 
+ 
+ - The presentation is meant to show information about the first part of the above mentioned assignment (a development project). 
+
+ - The presentation was generated using [***RStudio Presentor***](<https://www.rstudio.com>) framework. 
+
+## Application
+
+ - The first part of the assignment is to develop a web application. The application is named ***GDP forecast*** and is hosted at <https://conradfrank.shinyapps.io/GDP_forecast/>.
+ 
+
+ - This application shows an example of making a web application using R and [Shiny](https://shiny.rstudio.com) framework together.
+ 
+ - In the application, there are 2 parts. First we select a country and plot the **GDP per capita** (current US$) . The data is derived from **World Bank** <font size="3"> © 2018 The World Bank Group, All Rights Reserved.</font> using the library(**WDI**). This is a Time Series data.
+ 
+ - Second part in the app is to forecast the GDP data for the Country selected from the years 2018 to 2028 which is decided by the user.
+For this, library(**forecast**) is used. The [*auto.arima()*](https://www.rdocumentation.org/packages/forecast/versions/8.4/topics/auto.arima) function is used which is a Fit Best ARIMA (AutoRegressive Integrated Moving Average) Model To Univariate Time Series. Then the *forecast()* function is used to derive the predicted GDP for user defined years and plotted.
+ 
+ - The application and the current presentation source codes is uploaded at <https://github.com/l>. The application comprises 2 files: *ui.R* (UI), *server.R* (backend).
+  
+## Dataset
+
+Dataset used by the application is the [The World Bank - Databank](http://http://databank.worldbank.org/data/home.aspx) (using *'WDI'* package). The GDP data used is **GDP per capita (current US$)** which has a metadata tag -[*NY.GDP.PCAP.CD*](https://data.worldbank.org/indicator/NY.GDP.PCAP.CD)
+
+The dataset structure: 
+```{r data, echo = TRUE,message=FALSE}
+library(WDI)
+data <- WDI(indicator = "NY.GDP.PCAP.CD", country = 'USA', start = 1990, end = 2017 ) #USA selected for reference only
+str(data)
+```
+
+## Prediction
+
+Using the *auto.arima()* function, the best fit model of [ARIMA](https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average) is selected. The [forecast](https://www.rdocumentation.org/packages/forecast/versions/8.4/topics/forecast) function is used to predict the Time series for the number of years (ie from 2018 to 2028) decided by the user.
+
+A plot is generated has consists of the original GDP data from 1990-2017, the fittee values generated from forecast 1990-2017 and the extension plot of the predicted values of GDP. This also plots the C.I. of 80% and 95% 
+
+
+```{r lib,echo = FALSE, eval=FALSE}
+suppressWarnings(suppressMessages(library(WDI)))
+suppressWarnings(suppressMessages(library(forecast)))
+
+```
+
+```{r code,echo = TRUE, eval=FALSE}
+data <- WDI(indicator = "NY.GDP.PCAP.CD", country = "XYZ", start = 1990, end = 2018 )
+# XYZ - is02c format code of the country selected by the user
+
+ARIMAfit = auto.arima(df, approximation=FALSE,trace=FALSE)
+#this codes selects the best ARIMA model based on the GDP data
+
+forcst <- forecast(ARIMAfit,h=X)
+#X is calculated based on the number of years from 2018 onwards decided by the user.
+#The function generates the forecast TS data.
+```
